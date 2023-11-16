@@ -10,6 +10,13 @@ def is_game_over():
     return guessed == WORDS_TO_WIN or errors == ERRORS_TO_LOSE
 
 
+def check(guess, guesses):
+    if guess in guesses:
+        return True
+    else:
+        return False
+        
+
 guessed = 0
 errors = 0
 
@@ -28,13 +35,15 @@ print(f"Your word is '{word}'")
 
 while not is_game_over():
     guess = input("Your next take: ")
-    if guess in full_list:
+    if guess in full_list and check(guess, guesses) == False:
         guessed += 1
         guesses.append(guess)
         if guessed == WORDS_TO_WIN:
             congratulate_user()
             exit()
         print(f"That's right! {WORDS_TO_WIN - guessed} to go")
+    elif check(guess, guesses) == True:
+        print("You are wrong. Write another word.")
     else:
         errors += 1
         print(f"Oops :( No such word, you have {ERRORS_TO_LOSE - errors} lives more")
